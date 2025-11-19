@@ -29,6 +29,32 @@ The repository is designed to showcase skills in:
 
 ---
 
+## Data
+
+### Synthetic Transactions Dataset
+- Path: `data/raw/synthetic_transactions.csv`
+- Includes:
+  - Normal transactions
+  - Injected anomalies: large amounts, negative/zero values, category deviations
+- Fully included in the repo for exploration and modeling
+
+### Kaggle Credit Card Fraud Dataset (Not Included)
+- Original dataset: [Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
+- **Note:** `creditcard.csv` is too large for GitHub, so it is **not included** in this repo.
+- To use the Kaggle dataset locally:
+  1. Sign in to Kaggle and download `creditcard.csv`.
+  2. Place it in the folder: `data/raw/creditcard.csv`
+  3. The Day 3 notebook will automatically load it from this path.
+
+```python
+# Example: loading Kaggle data
+import pandas as pd
+
+df_kaggle = pd.read_csv('data/raw/creditcard.csv')
+```
+
+---
+
 ## Installation
 
 This project uses **Pipenv** for dependency management:
