@@ -19,7 +19,9 @@ A clean and consistent dataset is required before any machine learning model can
 - Parsing timestamps into usable date/time formats  
 - Converting categorical variables (text) into numerical encodings  
 - Scaling numeric variables to bring them onto similar ranges  
-- Handling missing values in a principled, statistical way  
+- Handling missing values using **imputation**, a statistical method for filling in missing data to prevent data loss or bias  
+
+> **Imputation**: The process of replacing missing values with substituted values, such as the mean, median, or most frequent category. It ensures that ML models can train without errors caused by incomplete data.
 
 These steps form the *foundation* of every later model.
 
@@ -135,12 +137,18 @@ Preserves the natural ranking, which is useful for tree-based models and compact
 ## Handling Missing Data
 
 Real-world datasets often contain missing values.  
-This project uses practical statistical imputation strategies:
+This project uses practical statistical **imputation** strategies:
 
 - **Mean imputation** for normally-distributed numeric features  
 - **Median imputation** for skewed numeric features  
 - **Most-frequent category imputation** for categorical columns  
 - **Row dropping only when absolutely necessary** to avoid biasing the model  
+
+> **Imputation in practice:**  
+> - **Mean**: average value fills missing numbers  
+> - **Median**: middle value for skewed distributions  
+> - **Mode**: most common category for categorical data  
+> This ensures models can train without errors caused by missing values.
 
 ---
 
@@ -208,7 +216,7 @@ Isolation Forest is especially good at:
 
 ---
 
-# 4. Model Training & Evaluation
+# Model Training & Evaluation
 
 This section describes the supervised and unsupervised modeling processes implemented in the notebooks.
 
@@ -227,95 +235,4 @@ This helps measure how well the model generalizes beyond the training data.
 
 ---
 
-## Models Used
-
-### Supervised Models (when labels are available):
-
-- Logistic Regression  
-- Random Forest  
-- Gradient Boosting  
-
-Supervised learning means the model is trained using known “correct answers,” such as a column named `label` with values 0 (normal) and 1 (anomaly).
-
----
-
-### Unsupervised Models (when labels are missing):
-
-- Isolation Forest  
-- Local Outlier Factor  
-- Autoencoders  
-
-Unsupervised models discover structure without guidance.
-
----
-
-## Evaluation Metrics
-
-All classification models rely on the following foundational metrics:
-
-### Accuracy
-
-$$
-\text{Accuracy} = \frac{TP + TN}{TP + FP + TN + FN}
-$$
-
-### Precision
-
-$$
-\text{Precision} = \frac{TP}{TP + FP}
-$$
-
-### Recall
-
-$$
-\text{Recall} = \frac{TP}{TP + FN}
-$$
-
-### F1 Score
-
-$$
-F1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}
-$$
-
-Where:
-
-- **TP** = true positives  
-- **TN** = true negatives  
-- **FP** = false positives  
-- **FN** = false negatives  
-
-These allow comparison between different models and ensure performance is interpreted correctly.
-
----
-
-# Data Visualization
-
-The notebooks also provide visual analysis to make results interpretable.
-
-### KDE Plots (Kernel Density Estimates)  
-These show smooth approximations of data distributions.  
-For example, comparing the distribution of transaction amounts for "normal" vs. "anomaly" cases.
-
-A KDE plot gives more insight than a simple histogram because it provides a continuous curve representing likelihood density.
-
-### Scatterplots & Correlation Heatmaps  
-Used to identify:
-
-- linear relationships  
-- clusters  
-- outliers  
-- correlations between features  
-
----
-
-# Summary
-
-This notebook README provides a complete, technically rigorous description of the ML pipeline used in this project:
-
-- How data is cleaned and prepared  
-- How scaling and encoding are applied  
-- Why particular algorithms were selected  
-- How anomaly detection works  
-- How Isolation Forest isolates rare patterns  
-- How models are trained, validated, and scored  
-- How visualizations support interpretation
+## Models
