@@ -84,53 +84,112 @@ Model training (Isolation Forest or others), tuning, evaluation metrics, ROC/AUC
 
 A detailed explanation for each notebook is provided inside the notebooks/README.md to help reviewers understand design decisions and methodology.  
 
-### FastAPI
-Run the API locally:
+## API Documentation
 
-    python src/api.py
+This project includes a production-ready FastAPI microservice that exposes the unified anomaly detection pipeline for real-time and batch inference.
 
-Example request:
+### Base URL
 
-    POST /predict
-    Content-Type: application/json
+```text
+http://localhost:8000
+```
 
-    [
-        {
-            "feature1": 10,
-            "feature2": "A",
-            "feature3": 3.14
-        }
-    ]
+### Endpoints
+**GET /health**
+Simple heartbeat.
 
-Example response:
+**Response**
+```json
+{ "status": "ok", "message": "Anomaly Detection API is running." }
+```
 
-    [
-        {
-            "anomaly": true,
-            "score": -0.65
-        }
-    ]
+**Get /metadata**
+Returns model, scaler, and preprocessor metadata.
 
----
+**POST /predict**
+Perform real-time anomaly detection on one transaction.
+
+**Request**
+```json
+{
+  "timestamp": "2025-01-01T11:22:00",
+  "customer_id": 101,
+  "Amount": 129.55,
+  "category": "grocery",
+  "status": 0
+}
+```
+
+**Response**
+```json
+{
+  "prediction": 0,
+  "anomaly_score": -0.21
+}
+```
+
+**POST /predict_batch**
+Perform anomaly detection on multiple transactions.
+
+**Request**
+```json
+{
+  "records": [
+    { "timestamp": "...", "Amount": 129.55, "category": "grocery" },
+    { "timestamp": "...", "Amount": 980.25, "category": "tech" }
+  ]
+}
+```
+
+**Response**
+```json
+{
+  "count": 2,
+  "predictions": [0, 1],
+  "anomaly_scores": [-0.21, 0.88]
+}
+```
+
+### Running The API Locally:
+
+```bash
+uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+```
+
+### Running Docker:
+
+```bash
+docker build -t anomaly-api .
+docker run -p 8000:8000 anomaly-api
+```
 
 ## Project Structure
 
     ai-etl-anomaly-detection/
         data/
+            raw/
+            processed/
+            results/
+        models/
         notebooks/
         src/
+            BaseCLasses/
+                base_preprocessor.py
+            Preprocessors/
+                kaggle_preprocessor.py
+                synthetic_preprocessor.py
+                unified_preprocessor.py
             data_loader.py
             preprocessing.py
             feature_engineering.py
             model.py
             evaluate.py
             api.py
-        models/
         tests/
         Pipfile
         Pipfile.lock
         requirements.txt (optional)
-        README.md
+        README.md (this file)
         .gitignore
 
 ---
