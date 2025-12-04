@@ -1,9 +1,11 @@
 import pandas as pd
+from src.Preprocessors.synthetic_preprocessor import SyntheticPreprocessor as SyntheticProcessor
+from src.Preprocessors.kaggle_preprocessor import KagglePreprocessor as KagglePreprocessor
 
 class UnifiedPreprocessor:
-    def __init__(self, synthetic_processor, kaggle_processor):
-        self.synthetic_processor = synthetic_processor
-        self.kaggle_processor = kaggle_processor
+    def __init__(self, synthetic_preprocessor=None, kaggle_preprocessor=None):
+        self.synthetic_preprocessor = synthetic_preprocessor or SyntheticProcessor()
+        self.kaggle_preprocessor = kaggle_preprocessor or KagglePreprocessor()
 
     def preprocess(self,
                    synthetic_source: str,
