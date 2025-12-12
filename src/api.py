@@ -1,62 +1,55 @@
 """
 api.py — FastAPI microservice for real-time and batch anomaly detection.
 
-This service exposes:
+Exposes:
   • /health          — health check
   • /metadata        — model + pipeline metadata
   • /predict         — real-time anomaly detection (single record)
   • /predict_batch   — batch anomaly detection (array of records)
 
-It loads:
-  • UnifiedPreprocessor — used for preprocessing incoming data
-  • Trained ML model    — saved during Day 5 training
-
-The API is aligned with the project's README description:
-  - End-to-end ETL pipeline
-  - Data cleaning, feature engineering, scaling
-  - Unified dataset structure
-  - Anomaly prediction via ML model
+Uses:
+  • UnifiedPreprocessor — for preprocessing API input
+  • Pre-trained ML models (random_forest.pkl, logistic_regression.pkl)
 
 Author: Dennis Fashimpaur
 """
 
 import uvicorn
 from fastapi import FastAPI
+from pandas import DataFrame
 from pydantic import BaseModel
-import pandas as pd
 import joblib
 from typing import List, Optional
 
 from src.Preprocessors.unified_preprocessor import UnifiedPreprocessor
 
-# -----------------------------------------------------
-# Initialize FastAPI App
-# -----------------------------------------------------
+# -------------------------------
+# Initialize FastAPI
+# -------------------------------
 app = FastAPI(
     title="Anomaly Detection API",
     description="Real-time microservice for unified transaction anomaly detection.",
     version="1.0.0"
 )
 
-# -----------------------------------------------------
-# Load Preprocessor + Model
-# -----------------------------------------------------
-print("🔧 Loading preprocessing pipeline and model...")
+# -------------------------------
+# Load preprocessor and models
+# -------------------------------
+print("🔧 Loading preprocessing pipeline and models...")
 
 preprocessor = UnifiedPreprocessor()
 
-MODEL_PATH = "models/trained_model.pkl"
-SCALER_PATH = "models/scaler.pkl"
+MODEL_PATH = "models/random_forest.pkl"
+SCALER_PATH = "models/logistic_regression.pkl"
 
 model = joblib.load(MODEL_PATH)
 scaler = joblib.load(SCALER_PATH)
 
 print("✅ API Startup Complete.")
 
-
-# -----------------------------------------------------
-# Pydantic Request Schemas
-# -----------------------------------------------------
+# -------------------------------
+# Pydantic schemas
+# -------------------------------
 class Transaction(BaseModel):
     timestamp: Optional[str] = None
     customer_id: Optional[int] = None
@@ -70,21 +63,33 @@ class BatchRequest(BaseModel):
     records: List[Transaction]
 
 
-# -----------------------------------------------------
-# Helper Function
-# -----------------------------------------------------
-def preprocess_input(records: List[Transaction]) -> pd.DataFrame:
+# -------------------------------
+# Helper function
+# -------------------------------
+def preprocess_input(records: List[Transaction]) -> DataFrame:
     """
-    Convert request payload → DataFrame → unified preprocessing.
+    Convert API payload → DataFrame → unified preprocessing.
     """
-    df = pd.DataFrame([r.dict() for r in records])
+    df = DataFrame([r.dict() for r in records])
     df_processed = preprocessor.preprocess_runtime(df)
     return df_processed
 
 
-# -----------------------------------------------------
+# -------------------------------
 # Routes
+# -------------------------------
 # -----------------------------------------------------
+# Root Landing Page
+# -----------------------------------------------------
+@app.get("/")
+def root():
+    return {
+        "message": "Welcome to the Anomaly Detection API!",
+        "documentation": "/docs",
+        "metadata": "/metadata"
+    }
+
+
 @app.get("/health")
 def health_check():
     return {"status": "ok", "message": "Anomaly Detection API is running."}
@@ -93,14 +98,16 @@ def health_check():
 @app.get("/metadata")
 def metadata():
     return {
-        "model_type": str(type(model)),
-        "scaler_type": str(type(scaler)),
+        "model_type": type(model).__name__,
+        "scaler_type": type(scaler).__name__,
         "preprocessor": "UnifiedPreprocessor",
         "description": "API for unified transaction anomaly detection pipeline."
     }
 
 
-# ------------------ Single Prediction ------------------
+# -------------------------------
+# Single prediction
+# -------------------------------
 @app.post("/predict")
 def predict(record: Transaction):
     df = preprocess_input([record])
@@ -113,7 +120,9 @@ def predict(record: Transaction):
     }
 
 
-# ------------------ Batch Prediction -------------------
+# -------------------------------
+# Batch prediction
+# -------------------------------
 @app.post("/predict_batch")
 def predict_batch(batch: BatchRequest):
     df = preprocess_input(batch.records)
@@ -127,12 +136,12 @@ def predict_batch(batch: BatchRequest):
     }
 
 
-# -----------------------------------------------------
-# Local Development Entry Point
-# -----------------------------------------------------
+# -------------------------------
+# Local development entry point
+# -------------------------------
 if __name__ == "__main__":
     uvicorn.run(
-        "app:app",
+        "api:app",  # points to this file
         host="0.0.0.0",
         port=8000,
         reload=True

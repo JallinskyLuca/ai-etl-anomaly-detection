@@ -153,14 +153,14 @@ Perform anomaly detection on multiple transactions.
 ### Running The API Locally:
 
 ```bash
-uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+uvicorn api:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 ### Running Docker:
 
 ```bash
 docker build -t anomaly-api .
-docker run -p 8000:8000 anomaly-api
+docker run -d --name anomaly-api-container -p 8000:8000 anomaly-api
 ```
 
 ## Project Structure
